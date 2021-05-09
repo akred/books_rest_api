@@ -2,8 +2,7 @@
 
 This project is a small REST API based on this stack :
 
-- PHP / Symfony 5 / Composer
-- PHP-FPM / Nginx
+- PHP / Symfony 5
 - MariaDB
 - Docker
 
@@ -11,18 +10,7 @@ This project is a small REST API based on this stack :
 
 - Install Git
 - Install docker / docker-compose
-
-## Startup :
-
-Run the following command at the root project
-```
-cd docker
-docker-compose up
-```
-
-Open you web browser with URL : http://localhost/index.php
-
-If you have a webpage, our API is run and running :)
+- Install Symfony : https://symfony.com/download
 
 ## Credits :
 
