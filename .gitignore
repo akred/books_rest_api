@@ -1,0 +1,13 @@
+## Database
+/docker/database/*
+!/docker/database/Dockerfile
+!/docker/phpmyadmin/Dockerfile
+
+## Nginx
+/docker/logs/nginx/*
+!/docker/logs/nginx/.gitkeep
+
+## PHP FPM
+/docker/php-fpm/*
+/docker/php-fpm/Dockerfile
+/docker/php-fpm/wait-for-it.sh
