@@ -20,6 +20,15 @@ class BookFixtures extends Fixture
         $manager->persist($book);
 
         $book = new Book();
+        $book->setTitle('Harry Potter and the final destiny');
+        $book->setAuthor('JK Rowling');
+        $book->setSummary('A latest story');
+        $book->setIsbn('978-3-16-148410-0');
+        $book->setCreatedAt(new \DateTime('now'));
+        $book->setUpdatedAt(new \DateTime('now'));
+        $manager->persist($book);
+
+        $book = new Book();
         $book->setTitle('Terminator');
         $book->setAuthor('Schwarzy');
         $book->setSummary('A action story');
