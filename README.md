@@ -56,6 +56,8 @@ __POST /api/books__
 }
 ```
 
+## DB model
+![DB model alt](/doc/books_rest_api.png "DB model").
 
 ## Credits :
 

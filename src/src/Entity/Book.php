@@ -13,8 +13,11 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * A book is attached to one or many libraries.
+ * A book is attached to only one library.
  * Libraries are considered as collections (like sf, comics, action, etc...)
+ * Note 1 : If a book can be attached to many librairies, the model has to be updated
+ * Note 2 : There is no multiple copies of a same book, there are unique
+ *
  * Book is attached to 0 or 1 user only
  *
  * @ApiResource(
