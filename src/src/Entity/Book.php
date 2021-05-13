@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\BookRepository;
 use App\Entity\Library;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiProperty;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -53,6 +54,14 @@ class Book
      * @ORM\Column(type="string", length=255)
      * @Groups({"book:read", "book:write", "library:read"})
      * @Assert\Isbn()
+     * @ApiProperty(
+     *  attributes={
+     *      "openapi_context"={
+     *          "type"="string",
+     *          "example"="978-1-56619-909-4"
+     *      }
+     *  }
+     * )
      */
     private $isbn;
 
@@ -60,6 +69,14 @@ class Book
      * @ORM\ManyToOne(targetEntity="Library", inversedBy="books")
      * @ORM\JoinColumn(nullable=false))
      * @Groups({"book:read", "book:write"})
+     * @ApiProperty(
+     *  attributes={
+     *      "openapi_context"={
+     *          "type"="Library",
+     *          "example"="api/libraries/1"
+     *      }
+     *  }
+     * )
      */
     private $library;
 
