@@ -5,6 +5,8 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\LibraryRepository;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -34,6 +36,23 @@ class Library
      */
     private $category;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Book", mappedBy="library")
+     * @Groups("library:read")
+     */
+    private $books;
+
+
+    public function __construct()
+    {
+        $this->books = new ArrayCollection();
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
     public function getCategory(): ?string
     {
         return $this->category;
@@ -42,6 +61,32 @@ class Library
     public function setCategory(string $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Book[]
+     */
+    public function getBooks(): Collection
+    {
+        return $this->books;
+    }
+
+    public function addBook(Book $book): self
+    {
+        if (!$this->books->contains($book)) {
+            $this->books->add($book);
+        }
+
+        return $this;
+    }
+
+    public function removeBook(Book $book): self
+    {
+        if ($this->books->contains($book)) {
+            $this->books->removeElement($book);
+        }
 
         return $this;
     }
@@ -68,5 +113,10 @@ class Library
         $this->updatedAt = $updatedAt;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->category;
     }
 }

@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\BookRepository;
+use App\Entity\Library;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -29,41 +30,48 @@ class Book
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"book:read", "book:write"})
+     * @Groups({"book:read", "book:write", "library:read"})
      * @Assert\NotBlank()
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"book:read", "book:write"})
+     * @Groups({"book:read", "book:write", "library:read"})
      * @Assert\NotBlank()
      */
     private $author;
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"book:read", "book:write"})
+     * @Groups({"book:read", "book:write", "library:read"})
      * @Assert\NotBlank()
      */
     private $summary;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"book:read", "book:write"})
+     * @Groups({"book:read", "book:write", "library:read"})
      * @Assert\Isbn()
      */
     private $isbn;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Library", inversedBy="books")
+     * @ORM\JoinColumn(nullable=false))
+     * @Groups({"book:read", "book:write"})
+     */
+    private $library;
+
+    /**
      * @ORM\Column(type="datetime")
-     * @Groups({"book:read"})
+     * @Groups({"book:read", "library:read"})
      */
     private $createdAt;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"book:read"})
+     * @Groups({"book:read", "library:read"})
      */
     private $updatedAt;
 
@@ -95,7 +103,6 @@ class Book
 
         return $this;
     }
-
 
     public function setSummary(string $summary): self
     {
@@ -143,5 +150,40 @@ class Book
         $this->updatedAt = $updatedAt;
 
         return $this;
+    }
+
+    public function getLibrary(): Library
+    {
+        return $this->library;
+    }
+
+    public function addLibrary(Library $library): self
+    {
+        if (!$this->library->getCategory() === $library->getCategory()) {
+            $this->library = $library;
+        }
+
+        return $this;
+    }
+
+    public function removeLibrary(Library $library): self
+    {
+        if (!$this->library->getCategory() === $library->getCategory()) {
+            $this->library = null;
+        }
+
+        return $this;
+    }
+
+    public function setLibrary(?Library $library): self
+    {
+        $this->library = $library;
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->title;
     }
 }
