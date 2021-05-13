@@ -27,12 +27,14 @@ Here the links :)
 - PHPMyAdmin : http://localhost:8080
 
 For the 1st time, it can take a long time to download dependencies (based on your laptop & connection speed).
-Once you see in the logs __"fpm is running, pid 1"__, your app is up and running :)
+Once you see in the logs **"fpm is running, pid 1"**, your app is up and running :)
 
 ## Payload examples
+
 Payload to attach a book to a user / library
 
-__PUT /api/books/{id}__
+**PUT /api/books/{id}**
+
 ```
 {
   "title": "Terminator",
@@ -43,9 +45,11 @@ __PUT /api/books/{id}__
   "user": "api/users/1"
 }
 ```
+
 Payload to create a book into a library
 
-__POST /api/books__
+**POST /api/books**
+
 ```
 {
   "title": "Hello world",
@@ -57,7 +61,58 @@ __POST /api/books__
 ```
 
 ## DB model
-![DB model alt](/doc/books_rest_api.png "DB model").
+
+![DB model alt](/doc/books_rest_api.png "DB model")
+
+## Swagger import
+
+[Swagger.json](/doc/swagger.json)
+
+## How to load fixtures ?
+
+To load some dummy data, go to `src` folder and type this command :
+`php bin/console doctrine:fixtures:load`
+
+## How to authenticate ?
+
+The "api/libraries" route need authentication to be able to get the results
+_Note : you can temporary disable it if you want by commenting the latest line at the botton of the file `src/config/packages/security.yaml`_
+
+```
+- { path: ^/api/libraries, roles: IS_AUTHENTICATED_FULLY }
+```
+
+### Steps
+
+- Create a user thanks to a payload
+
+POST ​/api​/users
+
+```
+{
+  "password": "secret123",
+  "username": "amerkel",
+  "firstname": "Angela",
+  "lastname": "Merkel"
+}
+```
+
+![Postman create user alt](/doc/postman_auth_token.png "Postman create user")
+
+- Call the route to get the Bearer token (through website or postman) :
+  POST http://localhost/api/login
+
+```
+{
+    "username": "amerkel",
+    "password": "secret123"
+}
+```
+
+![API Platform auth alt](/doc/api_platform_auth_token.png "API Platform auth")
+
+- Get the token and copy/paste it thanks to the button "Authorize" at the tight top of the API webpage
+- Then you can test the `api/libraries` route directly :)
 
 ## Credits :
 
