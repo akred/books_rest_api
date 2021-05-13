@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\UniqueConstraint;
 use App\Repository\BookRepository;
 use App\Entity\Library;
 use ApiPlatform\Core\Annotation\ApiResource;
@@ -18,7 +19,13 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     denormalizationContext={"groups"={"book:write"}}
  * )
  * @ORM\Entity(repositoryClass=BookRepository::class)
- * @ORM\Table(name="`book`")
+ * @ORM\Table(name="`book`",
+ *     uniqueConstraints={
+ *      @UniqueConstraint(name="book_unique",
+ *          columns={"title", "author"}
+ *      )
+ *    }
+ * )
  */
 class Book
 {
