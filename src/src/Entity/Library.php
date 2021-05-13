@@ -11,6 +11,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * A library contains one or many books.
+ * It can contains multiple books of the same type (comics, action, etc...)
+ *
  * @ApiResource(
  *     collectionOperations={"get", "post"},
  *     itemOperations={"get", "put", "delete"},

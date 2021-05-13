@@ -9,6 +9,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * User can borrow 0 or many books
+ *
  * @ApiResource(
  *     collectionOperations={"post"},
  *     itemOperations={"get", "put", "delete"},

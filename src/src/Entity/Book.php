@@ -6,12 +6,17 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\UniqueConstraint;
 use App\Repository\BookRepository;
 use App\Entity\Library;
+use App\Entity\User;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiProperty;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * A book is attached to one or many libraries.
+ * Libraries are considered as collections (like sf, comics, action, etc...)
+ * Book is attached to 0 or 1 user only
+ *
  * @ApiResource(
  *     collectionOperations={"get", "post"},
  *     itemOperations={"get", "put", "delete"},
@@ -58,6 +63,9 @@ class Book
     private $summary;
 
     /**
+     * NOTE : it should be unique constraint
+     * But for test purpose, and because it's hard to find one, let's keep it like this for tests :)
+     *
      * @ORM\Column(type="string", length=255)
      * @Groups({"book:read", "book:write", "library:read"})
      * @Assert\Isbn()
@@ -86,6 +94,12 @@ class Book
      * )
      */
     private $library;
+
+    /**
+     * @ORM\OneToOne(targetEntity="User", cascade="persist")
+     * @Groups({"book:read", "book:write", "user:read", "library:read"})
+     */
+    private $user;
 
     /**
      * @ORM\Column(type="datetime")
@@ -148,6 +162,18 @@ class Book
     public function setIsbn(string $isbn): self
     {
         $this->isbn = $isbn;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Book;
 use App\Entity\Library;
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
@@ -18,6 +19,14 @@ class BookFixtures extends Fixture
         $library2 = new Library();
         $library2->setCategory('Action');
         $manager->persist($library2);
+
+        $user = new User();
+        $user->setUsername('emacron');
+        $user->setFirstname('Emmanuel');
+        $user->setLastname('Macron');
+        $user->setCreatedAt(new \DateTime('now'));
+        $user->setUpdatedAt(new \DateTime('now'));
+        $manager->persist($user);
 
         $book = new Book();
         $book->setTitle('Harry Potter and the magic wand');
@@ -45,6 +54,7 @@ class BookFixtures extends Fixture
         $book->setSummary('A action story');
         $book->setIsbn('978-2-02-130451-0');
         $book->setLibrary($library2);
+        $book->setUser($user);
         $book->setCreatedAt(new \DateTime('now'));
         $book->setUpdatedAt(new \DateTime('now'));
         $manager->persist($book);
